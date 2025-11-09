@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Автомобильная энциклопедия: ВАЗ 2101-2110</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Автомобильная энциклопедия</h1>
+    <p class="subtitle">Модели ВАЗ от 2101 до 2110</p>
+    
+    <div class="search-container">
+        <input type="text" id="carModel" placeholder="Введите модель автомобиля (например: ВАЗ 2101)">
+        <button onclick="searchCar()">Найти</button>
+        <button class="clear-btn" onclick="clearSearch()">Очистить</button>
+    </div>
+    
+    <div class="models-grid" id="modelsGrid">
+        <!-- Модели будут добавлены через JavaScript -->
+    </div>
+    
+    <div id="result" class="result">
+        <div class="car-header">
+            <div class="car-image">
+                <img id="carImage" src="" alt="Фото автомобиля">
+            </div>
+            <div class="car-title">
+                <h2 id="carTitle"></h2>
+                <p id="carDescription"></p>
+            </div>
+        </div>
+        
+        <div class="car-info">
+            <strong>Дата начала производства:</strong>
+            <span id="startDate"></span>
+        </div>
+        
+        <div class="car-info">
+            <strong>Годы выпуска:</strong>
+            <span id="productionYears"></span>
+        </div>
+        
+        <div class="car-info">
+            <strong>Количество проданных:</strong>
+            <span id="salesCount"></span>
+        </div>
+        
+        <div class="car-info">
+            <strong>Класс автомобиля:</strong>
+            <span id="carClass"></span>
+        </div>
+        
+        <div class="car-info">
+            <strong>Характеристики:</strong>
+            <div class="specs-container" id="specifications">
+                <!-- Характеристики будут добавлены через JavaScript -->
+            </div>
+        </div>
+    </div>
+    
+    <div id="error" class="error"></div>
+    
+    <footer>
+        <p>Автомобильная энциклопедия &copy; 2023 | Данные приведены в ознакомительных целях</p>
+    </footer>
+
+    <script>
+        // База данных автомобилей ВАЗ от 2101 до 2110
+        const carDatabase = {
+            "ваз 2101": {
+                name: " «ВАЗ-2101»",
+                description: "Первый автомобиль, выпускавшийся на Волжском автомобильном заводе.",
+                startDate: "19 апреля 1970 года",
+                productionYears: "1970-1988",
+                salesCount: "4,85 млн штук",
+                carClass: "Малый класс",
+                image: "img/ваз 2101.jpg",
+                specifications: [
+                    "Двигатель: 1.2L (64.5 кВт/87 л.с.)",
+"Коробка передач: 4-ступенчатая МКПП",
+                    "Привод: задний",
+                    "Масса: 955 кг",
+                    "Максимальная скорость: 142 км/ч",
+                    "Разгон 0-100 км/ч: 20 сек",
+                    "Расход топлива: 8.0 л/100 км"
+                ]
+            },
+            "ваз 2102": {
+                name: " «ВАЗ-2102»",
+                description: "Универсал на базе ВАЗ-2101 с увеличенной грузоподъёмностью.",
+                startDate: "1971 год",
+                productionYears: "1971-1986",
+                salesCount: "666,232 штук",
+                carClass: "Малый класс (универсал)",
+                image: "img/ваз 2102.jpg",
+                specifications: [
+                    "Двигатель: 1.2L (64.5 кВт/87 л.с.)",
+                    "Коробка передач: 4-ступенчатая МКПП",
+                    "Привод: задний",
+                    "Масса: 1010 кг",
+                    "Максимальная скорость: 140 км/ч",
+                    "Разгон 0-100 км/ч: 22 сек",
+                    "Расход топлива: 8.5 л/100 км"
+                ]
+            },
+            "ваз 2103": {
+                name: " «ВАЗ-2103»",
+                description: "Более комфортабельная версия с улучшенным оснащением.",
+                startDate: "1972 год",
+                productionYears: "1972-1984",
+                salesCount: "1,304,899 штук",
+                carClass: "Малый класс",
+                image: "img/ваз 2103.jpg",
+                specifications: [
+                    "Двигатель: 1.5L (56 кВт/76 л.с.)",
+                    "Коробка передач: 4-ступенчатая МКПП",
+                    "Привод: задний",
+                    "Масса: 1030 кг",
+                    "Максимальная скорость: 150 км/ч",
+                    "Разгон 0-100 км/ч: 17 сек",
+                    "Расход топлива: 9.0 л/100 км"
+                ]
+            },
+            "ваз 2104": {
+                name: " «ВАЗ-2104»",
+                description: "Пятидверный универсал второго поколения автомобилей ВАЗ.",
+                startDate: "1984 год",
+                productionYears: "1984-2012",
+                salesCount: "1,13 млн штук",
+                carClass: "Малый класс (универсал)",
+                image: "img/ваз 2104.jpg",
+                specifications: [
+                    "Двигатель: 1.3L (48 кВт/65 л.с.)",
+                    "Коробка передач: 4-ступенчатая МКПП",
+                    "Привод: задний",
+                    "Масса: 1010 кг",
+                    "Максимальная скорость: 137 км/ч",
+                    "Разгон 0-100 км/ч: 19 сек",
+                    "Расход топлива: 8.2 л/100 км"
+                ]
+            },
+            "ваз 2105": {
+                name: " «ВАЗ-2105»",
+                description: "Базовый седан второго поколения автомобилей ВАЗ.",
+                startDate: "1979 год",
+                productionYears: "1979-2010",
+                salesCount: "2,09 млн штук",
+                carClass: "Малый класс",
+                image: "img/ваз 2105.jpg",
+                specifications: [
+                    "Двигатель: 1.3L (48 кВт/65 л.с.)",
+                    "Коробка передач: 4-ступенчатая МКПП",
+                    "Привод: задний",
+                    "Масса: 1000 кг",
+                    "Максимальная скорость: 145 км/ч",
+                    "Разгон 0-100 км/ч: 18 сек",
+                    "Расход топлива: 8.0 л/100 км"
+                ]
+            },
+            "ваз 2106": {
+                name: " «ВАЗ-2106»",
+description: "Самый массовый и популярный автомобиль в семействе «классики».",
+                startDate: "1976 год",
+                productionYears: "1976-2006",
+                salesCount: "4.3 млн штук",
+                carClass: "Малый класс",
+                image: "img/ваз 2106.jpg",
+                specifications: [
+                    "Двигатель: 1.6L (54.4 кВт/74 л.с.)",
+                    "Коробка передач: 4-ступенчатая МКПП",
+                    "Привод: задний",
+                    "Масса: 1035 кг",
+                    "Максимальная скорость: 152 км/ч",
+                    "Разгон 0-100 км/ч: 17 сек",
+                    "Расход топлива: 8.5 л/100 км"
+                ]
+            },
+            "ваз 2107": {
+                name: " «ВАЗ-2107»",
+                description: "Люксовая версия с улучшенным комфортом и оснащением.",
+                startDate: "1982 год",
+                productionYears: "1982-2012",
+                salesCount: "2,64 млн штук",
+                carClass: "Малый класс",
+                image: "img/ваз 2107.jpg",
+                specifications: [
+                    "Двигатель: 1.6L (54.4 кВт/74 л.с.)",
+                    "Коробка передач: 4-5-ступенчатая МКПП",
+                    "Привод: задний",
+                    "Масса: 1060 кг",
+                    "Максимальная скорость: 152 км/ч",
+                    "Разгон 0-100 км/ч: 16 сек",
+                    "Расход топлива: 8.5 л/100 км"
+                ]
+            },
+            "ваз 2108": {
+                name: " «ВАЗ-2108»",
+                description: "Переднеприводный хэтчбек, первая модель нового семейства.",
+                startDate: "1984 год",
+                productionYears: "1984-2003",
+                salesCount: "3,41 млн штук",
+                carClass: "Малый класс (хэтчбек)",
+                image: "img/ваз 2108.jpg",
+                specifications: [
+                    "Двигатель: 1.3L (47 кВт/64 л.с.)",
+                    "Коробка передач: 5-ступенчатая МКПП",
+                    "Привод: передний",
+                    "Масса: 915 кг",
+                    "Максимальная скорость: 155 км/ч",
+                    "Разгон 0-100 км/ч: 15 сек",
+                    "Расход топлива: 7.5 л/100 км"
+                ]
+            },
+            "ваз 2109": {
+                name: " «ВАЗ-2109»",
+                description: "Пятидверная версия переднеприводного хэтчбека.",
+                startDate: "1987 год",
+                productionYears: "1987-2004",
+                salesCount: "1,11 млн штук",
+                carClass: "Малый класс (хэтчбек)",
+                image: "img/ваз 2109.jpg",
+                specifications: [
+                    "Двигатель: 1.3L (47 кВт/64 л.с.)",
+                    "Коробка передач: 5-ступенчатая МКПП",
+                    "Привод: передний",
+                    "Масса: 945 кг",
+                    "Максимальная скорость: 155 км/ч",
+                    "Разгон 0-100 км/ч: 15 сек",
+                    "Расход топлива: 7.6 л/100 км"
+                ]
+            },
+            "ваз 2110": {
+                name: "« ВАЗ-2110»",
+                description: "Переднеприводный седан с современным дизайном.",
+                startDate: "1995 год",
+                productionYears: "1995-2007",
+                salesCount: "1,7 млн штук",
+                carClass: "Малый класс",
+                image: "img/ваз 2110.jpg",
+specifications: [
+                    "Двигатель: 1.5L (56 кВт/76 л.с.)",
+                    "Коробка передач: 5-ступенчатая МКПП",
+                    "Привод: передний",
+                    "Масса: 1060 кг",
+                    "Максимальная скорость: 165 км/ч",
+                    "Разгон 0-100 км/ч: 14 сек",
+                    "Расход топлива: 7.8 л/100 км"
+                ]
+            }
+        };
+
+        // Инициализация страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            createModelCards();
+        });
+
+        // Создание карточек моделей
+        function createModelCards() {
+            const modelsGrid = document.getElementById('modelsGrid');
+            
+            for (const model in carDatabase) {
+                const modelCard = document.createElement('div');
+                modelCard.className = 'model-card';
+                modelCard.textContent = carDatabase[model].name.split(' ')[1]; // Берем только номер модели
+                modelCard.setAttribute('data-model', model);
+                modelCard.addEventListener('click', function() {
+                    document.getElementById('carModel').value = this.getAttribute('data-model');
+                    searchCar();
+                    
+                    // Подсветка активной карточки
+                    document.querySelectorAll('.model-card').forEach(card => {
+                        card.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                });
+                
+                modelsGrid.appendChild(modelCard);
+            }
+        }
+
+        function searchCar() {
+            const input = document.getElementById('carModel');
+            const resultDiv = document.getElementById('result');
+            const errorDiv = document.getElementById('error');
+            const carModel = input.value.toLowerCase().trim();
+            
+            // Скрываем предыдущие результаты и ошибки
+            resultDiv.style.display = 'none';
+            errorDiv.style.display = 'none';
+            
+            if (!carModel) {
+                errorDiv.textContent = 'Пожалуйста, введите модель автомобиля';
+                errorDiv.style.display = 'block';
+                return;
+            }
+            
+            // Поиск в базе данных
+            const car = carDatabase[carModel];
+            
+            if (car) {
+                // Заполняем данные
+                document.getElementById('carTitle').textContent = car.name;
+                document.getElementById('carDescription').textContent = car.description;
+                document.getElementById('carImage').src = car.image;
+                document.getElementById('carImage').alt = car.name;
+                document.getElementById('startDate').textContent = car.startDate;
+                document.getElementById('productionYears').textContent = car.productionYears;
+                document.getElementById('salesCount').textContent = car.salesCount;
+                document.getElementById('carClass').textContent = car.carClass;
+                
+                // Заполняем характеристики
+                const specsDiv = document.getElementById('specifications');
+                specsDiv.innerHTML = '';
+                car.specifications.forEach(spec => {
+                    const specItem = document.createElement('div');
+                    specItem.className = 'spec-item';
+                    specItem.textContent = spec;
+                    specsDiv.appendChild(specItem);
+                });
+                
+                // Показываем результат
+                resultDiv.style.display = 'block';
+                
+                // Подсветка активной карточки
+                document.querySelectorAll('.model-card').forEach(card => {
+card.classList.remove('active');
+                    if (card.getAttribute('data-model') === carModel) {
+                        card.classList.add('active');
+                    }
+                });
+            } else {
+                errorDiv.textContent = 'Автомобиль не найден в базе данных. Попробуйте другую модель.';
+                errorDiv.style.display = 'block';
+            }
+        }
+
+        function clearSearch() {
+            document.getElementById('carModel').value = '';
+            document.getElementById('result').style.display = 'none';
+            document.getElementById('error').style.display = 'none';
+            
+            // Снимаем подсветку с карточек
+            document.querySelectorAll('.model-card').forEach(card => {
+                card.classList.remove('active');
+            });
+        }
+
+        // Обработка нажатия Enter
+        document.getElementById('carModel').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchCar();
+            }
+        });
+    </script>
+</body>
+</html>
